@@ -23,7 +23,7 @@ export default function Keyboard({
       className={`transition ${opened && "translate-y-[-600px]"} duration-700 fixed absolute left-0 right-0 z-10 font-montserrat font-medium text-[18px]`}
     >
       <div
-        className={`w-[1840px] h-[652px] rounded-[48px] bg-white font- text-[#373737] justify-center items-center text-center px-[30.12px] pt-[24px]`}
+        className={`w-[1840px] h-[652px] rounded-[48px] bg-white font-montserrat text-[#373737] justify-center items-center text-center px-[30.12px] pt-[24px]`}
       >
         <div className="flex gap-[8px] justify-center items-center text-center mt-[24px]">
           {language === "RUS" &&

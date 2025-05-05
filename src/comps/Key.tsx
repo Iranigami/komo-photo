@@ -12,7 +12,7 @@ type Props = {
 export default function Key({ type, text, className, clickHandler }: Props) {
   return (
     <button
-      className={`h-[48px] flex justify-center items-center text-center rounded-[8px] ${type === "symbol" && "bg-white"} ${className} active:bg-[#E1E3E3] key-shadow font-montserrat`}
+      className={`w-full h-full max-w-[158px] flex justify-center items-center text-center rounded-[8px] bg-[#FAFAFA] ${className} active:bg-[#E1E3E3] key-shadow font-montserrat`}
       onClick={clickHandler}
     >
       {text}
