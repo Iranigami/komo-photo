@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+@theme {
+  --font-osnova-pro: "Osnova Pro";
+  --color-blue-accent: #4663af;
+  --color-light-blue: #cddef0;
+  --color-blue-bg: #e3ebf6;
+  --color-gray-primary: #2b2a29;
+  --color-gray-secondary: #464444;
+  --color-gray-third: #b2afae;
+  --animate-float: float 1s ease-in-out infinite;
+  @keyframes float {
+    0%,
+    100% {
+      transform: rotate(-7deg);
+      scale: 100%;
+    }
+    50% {
+      transform: rotate(7deg);
+      scale: 90%;
+    }
+  }
+}
+
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+@layer base {
+  @font-face {
+    font-family: Osnova Pro;
+    font-weight: 400;
+    src: url(./assets/fonts/OsnovaPro.ttf);
+  }
+  @font-face {
+    font-family: Osnova Pro;
+    font-weight: 700;
+    src: url(./assets/fonts/OsnovaPro-Bold.ttf);
+  }
+  @font-face {
+    font-family: EuropeExt;
+    font-weight: 700;
+    src: url(./assets/fonts/europeextbold.ttf);
+  }
+}
