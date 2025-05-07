@@ -3,21 +3,26 @@ type Props = {
 };
 
 export default function Countdown({ frames }: Props) {
+    var start = frames;
+    var result = [];
+    while (start >= 0) {
+        result.push(start--);
+    }
+    console.log(result)
   return (
-    <div
-      style={{
-        animation: `slide-in 1s linear`,
-      }}
-    >
-      {" "}
-      <div
+    <div className="countdown-container">
+        {}
+      <div      
+      
         style={{
-          animationDelay: `5s`,
+            animationName: `moveUp`,
+            animationDelay: `0s`,
         }}
-        className="size-[408px] rounded-full bg-white flex justify-center items-center text-center font-montserrat text-blue-accent font-bold text-[264px]"
-      >
-        5
-      </div>
+        className="circle">5</div>
+      <div className="circle">4</div>
+      <div className="circle">3</div>
+      <div className="circle">2</div>
+      <div className="circle">1</div>
     </div>
   );
 }
