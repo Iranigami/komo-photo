@@ -1,56 +1,61 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import SelectModal from "../comps/SelectModal";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import type { VariantData } from "../Types";
 
 export default function Selecting() {
   const navigate = useNavigate();
-  const [selectedCharacter, setSelectedCharacter] = useState(0);
-  const [selectedBackground, setSelectedBackground] = useState(0);
-  const [openedModal, setOpenedModal] = useState("character");
-  const tempData = [
-    {
-      id: 0,
-      image:
-        "https://img.freepik.com/free-photo/cute-cat-spending-time-indoors_23-2150649172.jpg?semt=ais_hybrid&w=740",
-      title: "Котик",
-      description: "Да, ето котик",
-    },
-    {
-      id: 1,
-      image:
-        "https://avatars.dzeninfra.ru/get-zen_doc/8269145/pub_641ec1d0798be415157b4180_641f3d1cd4b1f54fcf2f0a01/scale_1200",
-      title: "Котик2",
-      description: "Да, ето котик2",
-    },
-    {
-      id: 2,
-      image:
-        "https://vet-centre.by/wp-content/uploads/2016/11/kot-eti-udivitelnye-kotiki.jpg",
-      title: "Котик2",
-      description: "Да, ето котик2",
-    },
-    {
-      id: 3,
-      image:
-        "https://vet-centre.by/wp-content/uploads/2016/11/kot-eti-udivitelnye-kotiki.jpg",
-      title: "",
-      description: "",
-    },
-  ];
+  const apiUrl = import.meta.env.VITE_API_URL;
+  const [characterList, setCharacterList] = useState<VariantData[]>([]);
+  const [backgroundList, setBackgroundList] = useState<VariantData[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedCharacter, setSelectedCharacter] = useState(1);
+  const [selectedBackground, setSelectedBackground] = useState(1);
+  const [openedModal, setOpenedModal] = useState("none");
+  useEffect(() => {
+    setLoading(true);
+    axios.get(`${apiUrl}/api/costumes`).then((response) => {
+      setCharacterList(response.data);
+      setLoading(false);
+      setOpenedModal("character");
+    });
+    axios.get(`${apiUrl}/api/backgrounds`).then((response) => {
+      setBackgroundList(response.data);
+      setLoading(false);
+    });
+  }, []);
   return (
-    <div className="w-full h-full fixed top-0 bg-linear-to-b from-light-blue to-blue-accent justify-center pt-[164px]">
-      <div></div>
-      {openedModal === "character" && (
+    <div className="w-full h-full fixed top-0 justify-center">
+      {loading === false &&
+        backgroundList[selectedBackground] !== undefined &&
+        characterList[selectedCharacter] !== undefined && (
+          <div className="w-full h-full">
+            <img
+              src={apiUrl + backgroundList[selectedBackground].image}
+              alt="background"
+              className="absolute w-full h-full"
+            />
+            <img
+              src={apiUrl + characterList[selectedCharacter].image}
+              alt="costume"
+              className="absolute h-[3234px] mt-[606px] left-0 right-0 mx-auto"
+            />
+          </div>
+        )}
+      {openedModal === "character" && !loading && (
         <SelectModal
-          data={tempData}
+          init={selectedCharacter}
+          data={characterList}
           texts={["Персонажи", "Перейти к выбору фона", ""]}
           onSelect={(id) => setSelectedCharacter(id)}
           onNext={() => setOpenedModal("background")}
         />
       )}
-      {openedModal === "background" && (
+      {openedModal === "background" && !loading && (
         <SelectModal
-          data={tempData}
+          init={selectedBackground}
+          data={backgroundList}
           texts={["Фоновое изображение", "Сделать фотографию", "Назад"]}
           onSelect={(id) => setSelectedBackground(id)}
           onBack={() => {
@@ -58,7 +63,7 @@ export default function Selecting() {
           }}
           onNext={() =>
             navigate(
-              `/camera?character=${selectedCharacter}&background=${selectedBackground}`,
+              `/camera?character=${selectedCharacter + 1}&background=${selectedBackground + 1}`,
             )
           }
         />

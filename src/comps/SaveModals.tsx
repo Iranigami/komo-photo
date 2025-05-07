@@ -1,16 +1,27 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ChangeEvent } from "react";
 import Keyboard from "./Keyboard";
 import axios from "axios";
 import type { ShareLink } from "../Types";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 export default function SaveModals() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const photoId = [`${searchParams.get("id")}`];
   const [isKeyboardOpen, setKeyboardOpen] = useState(false);
-  const [isSendButtonDisabled, setSendButtonDisabled] = useState(true);
+  const inputField = document.getElementById("email")!;
+  const [text, setText] = useState("");
   const [loading, setLoading] = useState(true);
   const apiUrl = import.meta.env.VITE_API_URL;
   const shareLinks = useRef<ShareLink[]>([]);
+  const [isEmailCorrect, setEmailCorrect] = useState(false);
+  const checkEmail = (email: string) => {
+    const re =
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    setEmailCorrect(re.test(email));
+    setText(email);
+  };
+
   useEffect(() => {
     setLoading(true);
     axios.get(`${apiUrl}/api/share_links`).then((response) => {
@@ -18,6 +29,28 @@ export default function SaveModals() {
       setLoading(false);
     });
   }, []);
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setText(event.target.value);
+    checkEmail(event.target.value);
+  };
+
+  const sendPhoto = () => {
+    const data = {
+      email: text,
+      imageResults: photoId,
+    };
+    axios
+      .post(`${apiUrl}/api/image_results`, data, {
+        headers: { "Content-Type": "application/json" },
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error.data);
+      });
+  };
   return (
     <div className="fixed top-[885px] w-full h-full">
       <div
@@ -73,12 +106,17 @@ export default function SaveModals() {
         </div>
         <div className="w-full flex gap-[32px] justify-center items-center mt-[64px]">
           <input
+            onChange={handleChange}
+            value={text}
+            autoComplete="off"
+            id="email"
             onClick={() => setKeyboardOpen(true)}
             placeholder="email@example.com"
             className="w-[777px] h-[168px] bg-[#FAFAFA] rounded-[64px] px-[80px] text-gray-secondary text-[40px] font-normal"
           />
           <button
-            disabled={isSendButtonDisabled}
+            onClick={sendPhoto}
+            disabled={!isEmailCorrect}
             className="w-[410px] h-[168px] bg-blue-accent rounded-[64px] text-white font-bold text-[48px] disabled:opacity-[50%]"
           >
             Отправить
@@ -92,6 +130,19 @@ export default function SaveModals() {
         </button>
       </div>
       <Keyboard
+        enterButton={(button: string) => {
+          (inputField as HTMLInputElement).value += button;
+          checkEmail((inputField as HTMLInputElement).value);
+        }}
+        onBackspace={() => {
+          (inputField as HTMLInputElement).value = (
+            inputField as HTMLInputElement
+          ).value.substring(
+            0,
+            (inputField as HTMLInputElement).value.length - 1,
+          );
+          checkEmail((inputField as HTMLInputElement).value);
+        }}
         opened={isKeyboardOpen}
         onClose={() => setKeyboardOpen(false)}
       />

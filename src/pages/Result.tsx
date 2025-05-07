@@ -2,28 +2,33 @@ import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import reload from "../assets/images/icons/reload.svg";
 import ErrorModal from "../comps/ErrorModal";
-import LoadingModal from "../comps/LoadingModal";
 import SaveModals from "../comps/SaveModals";
+import axios from "axios";
 
 export default function Result() {
   const [isPhotoLoading, setPhotoLoading] = useState(true);
   const [isErrorModalOpen, setErrorModalOpen] = useState(false);
+  const apiUrl = import.meta.env.VITE_API_URL;
   const [isSaveModalsOpen, setSaveModalsOpen] = useState(false);
   const navigate = useNavigate();
-  const [bg, setBg] = useState("src/assets/images/testCat.jpg");
+  const [bg, setBg] = useState("");
   const [searchParams] = useSearchParams();
+
   useEffect(() => {
-    setTimeout(() => {
-      setBg(
-        "http://i2.wp.com/www.mordeo.org/files/uploads/2018/10/Cute-Kitten-Blue-Eyes-Flower-4K-Ultra-HD-Mobile-Wallpaper.jpg",
-      );
-      setPhotoLoading(false);
-    }, 3000);
+    if (searchParams.get("error")) setErrorModalOpen(true);
+    if (searchParams.get("id"))
+      axios
+        .get(`${apiUrl}/api/image_results/${searchParams.get("id")}`)
+        .then((response) => {
+          setBg(apiUrl + response.data.image);
+          setPhotoLoading(false);
+        });
   }, []);
   return (
     <div className="w-[100vw] h-[100vh] bg-linear-to-b from-light-blue to-blue-accent top-0 fixed">
-      {isPhotoLoading && <LoadingModal />}
-      <img src={bg} alt="" className="w-[100vw] h-[100vh] absolute z-[-1]" />
+      {!isPhotoLoading && (
+        <img src={bg} alt="" className="w-[100vw] h-[100vh] absolute z-[-1]" />
+      )}
       {!isPhotoLoading && !isSaveModalsOpen && (
         <div className="fixed bottom-0 w-full h-[360px] bg-white rounded-t-[136px] flex justify-center items-center font-osnova-pro font-bold text-[48px]">
           <button

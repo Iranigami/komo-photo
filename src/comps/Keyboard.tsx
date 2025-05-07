@@ -26,13 +26,22 @@ export default function Keyboard({
         className={`mx-auto w-[1840px] h-[652px] rounded-[48px] bg-white font-montserrat text-[#373737] justify-center items-center text-center px-[30.12px] pt-[48px] font-normal`}
       >
         <div className="mx-auto justify-center items-center w-full h-[76px] divide-x-2 flex divide-gray-third">
-          <div className="w-[276px] font-normal text-[36px] text-gray-primary leading-[100%] tracking-[-0.86px] text-center">
+          <div
+            onClick={() => enterButton("@gmail.com")}
+            className="w-[276px] font-normal text-[36px] text-gray-primary leading-[100%] tracking-[-0.86px] text-center"
+          >
             @gmail.com
           </div>
-          <div className="w-[276px] font-normal text-[36px] text-gray-primary leading-[100%] tracking-[-0.86px] text-center">
+          <div
+            onClick={() => enterButton("@mail.ru")}
+            className="w-[276px] font-normal text-[36px] text-gray-primary leading-[100%] tracking-[-0.86px] text-center"
+          >
             @mail.ru
           </div>
-          <div className="w-[276px] font-normal text-[36px] text-gray-primary leading-[100%] tracking-[-0.86px] text-center">
+          <div
+            onClick={() => enterButton("@yandex.ru")}
+            className="w-[276px] font-normal text-[36px] text-gray-primary leading-[100%] tracking-[-0.86px] text-center"
+          >
             @yandex.ru
           </div>
         </div>

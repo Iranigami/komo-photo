@@ -4,15 +4,22 @@ import sparkles from "../assets/images/sparkles.gif";
 import time from "../assets/images/icons/timer.svg";
 import React, { useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import axios from "axios";
+import test from "../assets/images/be4be715-92c1-46d7-9bec-6ac630c52fc4.png";
+import LoadingModal from "../comps/LoadingModal";
+import Countdown from "../comps/Countdown";
 
 export default function Camera() {
+  const [isCountdownShown, setCountdownShown] = useState(false);
   const [isSnapButtonDisabled, setSnapButtonDisabled] = useState(false);
-  const searchParams = useSearchParams();
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [isErrorStated, setErrorStated] = useState(false);
   const [timerAppearance, setTimerAppearance] = useState(0);
   const timer = useRef(3000);
+  const apiUrl = import.meta.env.VITE_API_URL;
   const webcamRef = React.useRef<Webcam>(null);
+  const [isLoading, setLoading] = useState(false);
   const makePhoto = () => {
     setSnapButtonDisabled(true);
     if (!webcamRef.current) console.log("Error");
@@ -21,16 +28,31 @@ export default function Camera() {
         capture();
       }, timer.current);
   };
-  const capture = React.useCallback(() => {
+  const capture = React.useCallback(async () => {
     const imageSrc = webcamRef.current!.getScreenshot();
-    //тут идет отправка
-    navigate("/result"); //тут добавить парамс для получения картинки
+    let blob = await fetch(test).then((r) => r.blob());
+    const data = {
+      userImage: blob,
+      costumeId: searchParams.get("character"),
+      backgroundId: searchParams.get("background"),
+    };
+    setLoading(true);
+    axios
+      .post(`${apiUrl}/api/image_results`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          accept: "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        navigate(`/result?id=${response.data.id}`);
+      })
+      .catch((error) => {
+        console.log(error.data);
+        navigate("/result?error=true");
+      });
   }, [webcamRef]);
-  const videoConstraints = {
-    width: 3840,
-    height: 2160,
-    facingMode: "user",
-  };
   return (
     <div className="fixed top-0 w-full h-full">
       <div className="mt-[128px] text-white text-[240px] tracking-[-9.6px] leading-[100%] uppercase text-center font-bold font-osnova-pro">
@@ -50,7 +72,6 @@ export default function Camera() {
         ref={webcamRef}
         width={3840}
         height={2160}
-        videoConstraints={videoConstraints}
         className="top-[600px] rotate-90 z-[-1] absolute scale-[230%]"
       />
       <div className="w-full h-[360px] rounded-t-[136px] bg-white bottom-0 fixed px-[64px] flex justify-between items-center">
@@ -113,6 +134,10 @@ export default function Camera() {
         >
           Сделать фотографию
         </button>
+        <button
+          className="size-[100px] bg-black"
+          onClick={() => setCountdownShown((prev) => !prev)}
+        />
       </div>
       <div
         hidden={!isErrorStated}
@@ -148,6 +173,8 @@ export default function Camera() {
           </div>
         </div>
       </div>
+      {isLoading && <LoadingModal />}
+      {isCountdownShown && <Countdown frames={5} />}
     </div>
   );
 }
