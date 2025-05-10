@@ -21,7 +21,7 @@ export default function ErrorModal() {
           На главную
         </button>
         <button
-          onClick={() => navigate("/camera")}
+          onClick={() => navigate(-1)}
           className="w-[774px] h-[168px] rounded-[72px] flex gap-[24px] justify-center items-center bg-white border-[6px] border-blue-accent text-blue-accent font-osnova-pro font-bold text-[48px] leading-[100%] tracking-0 text-center"
         >
           <img src={reload} alt="try again" className="size-[72px]" />

@@ -3,26 +3,33 @@ type Props = {
 };
 
 export default function Countdown({ frames }: Props) {
-    var start = frames;
-    var result = [];
-    while (start >= 0) {
-        result.push(start--);
-    }
-    console.log(result)
+  var start = frames;
+  var result = [];
+  while (start > 0) {
+    result.push(start--);
+  }
   return (
-    <div className="countdown-container">
-        {}
-      <div      
-      
-        style={{
-            animationName: `moveUp`,
-            animationDelay: `0s`,
-        }}
-        className="circle">5</div>
-      <div className="circle">4</div>
-      <div className="circle">3</div>
-      <div className="circle">2</div>
-      <div className="circle">1</div>
+    <div className="countdown-container size-[408px] bottom-0 mt-[1945px] mx-auto flex justify-center">
+      {result!.map((frame: number) => (
+        <div
+          style={{
+            animationName: `scaleUp`,
+            animationDelay: `${frames - frame}s`,
+          }}
+          className="circle absolute mx-auto left-0 right-0"
+          key={frame}
+        >
+          <div
+            style={{
+              animationName: `moveUp`,
+              animationDelay: `${frames - frame}s`,
+            }}
+            className={`circle size-[408px] rounded-full bg-white flex justify-center items-center font-bold text-[${frame === 10 ? "200" : "264"}px] text-blue-accent font-europe`}
+          >
+            {frame}
+          </div>
+        </div>
+      ))}
     </div>
   );
 }

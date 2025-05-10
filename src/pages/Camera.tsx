@@ -5,7 +5,6 @@ import time from "../assets/images/icons/timer.svg";
 import React, { useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
-import test from "../assets/images/be4be715-92c1-46d7-9bec-6ac630c52fc4.png";
 import LoadingModal from "../comps/LoadingModal";
 import Countdown from "../comps/Countdown";
 
@@ -21,6 +20,7 @@ export default function Camera() {
   const webcamRef = React.useRef<Webcam>(null);
   const [isLoading, setLoading] = useState(false);
   const makePhoto = () => {
+    setCountdownShown(true);
     setSnapButtonDisabled(true);
     if (!webcamRef.current) console.log("Error");
     else
@@ -28,30 +28,60 @@ export default function Camera() {
         capture();
       }, timer.current);
   };
-  const capture = React.useCallback(async () => {
-    const imageSrc = webcamRef.current!.getScreenshot();
-    let blob = await fetch(test).then((r) => r.blob());
-    const data = {
-      userImage: blob,
-      costumeId: searchParams.get("character"),
-      backgroundId: searchParams.get("background"),
-    };
-    setLoading(true);
-    axios
-      .post(`${apiUrl}/api/image_results`, data, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          accept: "multipart/form-data",
+
+  const captureAndConvertToFile = async (): Promise<File | null> => {
+    if (!webcamRef.current) return null;
+    const canvas = webcamRef.current.getCanvas();
+    if (!canvas) return null;
+
+    return new Promise((resolve) => {
+      canvas.toBlob(
+        (blob) => {
+          if (!blob) {
+            resolve(null);
+            return;
+          }
+          const file = new File([blob], "webcam-screenshot.jpg", {
+            type: "image/jpeg",
+            lastModified: Date.now(),
+          });
+
+          resolve(file);
         },
-      })
-      .then((response) => {
-        console.log(response.data);
-        navigate(`/result?id=${response.data.id}`);
-      })
-      .catch((error) => {
-        console.log(error.data);
-        navigate("/result?error=true");
-      });
+        "image/jpeg",
+        0.9,
+      );
+    });
+  };
+
+  const capture = React.useCallback(async () => {
+    setLoading(true);
+    const file = await captureAndConvertToFile();
+    if (file) {
+      const data = {
+        userImage: file,
+        costumeId: searchParams.get("character"),
+        backgroundId: searchParams.get("background"),
+      };
+      console.log(data);
+      axios
+        .post(`${apiUrl}/api/image_results`, data, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            accept: "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+          navigate(`/result?id=${response.data.id}`);
+        })
+        .catch((error) => {
+          console.log(error.data);
+          navigate("/result?error=true");
+        });
+    } else {
+      console.error("Не удалось создать файл");
+    }
   }, [webcamRef]);
   return (
     <div className="fixed top-0 w-full h-full">
@@ -74,7 +104,10 @@ export default function Camera() {
         height={2160}
         className="top-[600px] rotate-90 z-[-1] absolute scale-[230%]"
       />
-      <div className="w-full h-[360px] rounded-t-[136px] bg-white bottom-0 fixed px-[64px] flex justify-between items-center">
+      <div
+        hidden={isSnapButtonDisabled}
+        className="w-full h-[360px] rounded-t-[136px] bg-white bottom-0 fixed px-[64px] flex justify-between items-center"
+      >
         <div className="flex justify-center items-center gap-[64px]">
           <div className="flex gap-[32px] justify-center items-center">
             <img src={time} alt="timer" className="size-[48px]" />
@@ -134,10 +167,6 @@ export default function Camera() {
         >
           Сделать фотографию
         </button>
-        <button
-          className="size-[100px] bg-black"
-          onClick={() => setCountdownShown((prev) => !prev)}
-        />
       </div>
       <div
         hidden={!isErrorStated}
@@ -174,7 +203,7 @@ export default function Camera() {
         </div>
       </div>
       {isLoading && <LoadingModal />}
-      {isCountdownShown && <Countdown frames={5} />}
+      {isCountdownShown && <Countdown frames={timer.current / 1000} />}
     </div>
   );
 }

@@ -65,8 +65,8 @@ h1 {
   }
   @font-face {
     font-family: EuropeExt;
-    font-weight: 700;
-    src: url(./assets/fonts/europeextbold.ttf);
+
+    src: url(./assets/fonts/12749.otf) format("opentype");
   }
   @font-face {
     font-family: Montserrat;
@@ -80,38 +80,41 @@ h1 {
   }
 }
 
-
 .countdown-container {
   position: relative;
-  width: 100px;
-  height: 400px;
 }
 .circle {
-  position: absolute;
-  bottom: 0;
-  left: calc(50% - 25px);
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  font-size: 2rem;
-  color: white;
-  text-align: center;
-  line-height: 50px;
-  animation-duration: 1s;
+  animation-duration: 2s;
   animation-timing-function: ease-out;
   animation-fill-mode: forwards;
 }
+
+@keyframes scaleUp {
+  0% {
+    transform: scale(20%);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(100%);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(100%);
+    opacity: 0;
+  }
+}
+
 @keyframes moveUp {
   0% {
     transform: translateY(0);
     opacity: 0;
   }
   50% {
-    transform: translateY(-400px);
+    transform: translateY(-800px);
     opacity: 1;
   }
   100% {
-    transform: translateY(-400px);
+    transform: translateY(-800px);
     opacity: 0;
   }
 }
