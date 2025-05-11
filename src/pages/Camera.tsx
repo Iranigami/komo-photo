@@ -102,7 +102,7 @@ export default function Camera() {
         ref={webcamRef}
         width={3840}
         height={2160}
-        className="top-[600px] rotate-90 z-[-1] absolute scale-[230%]"
+        className="top-[600px] rotate-270 z-[-1] absolute scale-[230%]"
       />
       <div
         hidden={isSnapButtonDisabled}
