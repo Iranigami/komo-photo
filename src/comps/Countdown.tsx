@@ -24,9 +24,9 @@ export default function Countdown({ frames }: Props) {
               animationName: `moveUp`,
               animationDelay: `${frames - frame}s`,
             }}
-            className={`circle size-[408px] rounded-full bg-white flex justify-center items-center font-bold text-[${frame === 10 ? "200" : "264"}px] text-blue-accent font-europe`}
+            className={`circle size-[408px] rounded-full bg-white flex justify-center items-center font-bold text-blue-accent font-europe`}
           >
-            {frame}
+            <span className={`text-[200px]`}>{frame}</span>
           </div>
         </div>
       ))}

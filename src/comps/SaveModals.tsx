@@ -71,11 +71,9 @@ export default function SaveModals() {
                 className=""
               />
             )}
-            {!loading && (
               <div className="font-normal tracking-[0.4px] text-[40px] text-gray-primary mt-[20px]">
-                {shareLinks.current[0].tag}
+                Вконтакте
               </div>
-            )}
           </div>
           <div className="size-[461px] bg-blue-bg rounded-[64px] p-[20px] mt-[64px]">
             {!loading && (
@@ -85,11 +83,9 @@ export default function SaveModals() {
                 className=""
               />
             )}
-            {!loading && (
               <div className="font-normal tracking-[0.4px] text-[40px] text-gray-primary mt-[20px]">
-                {shareLinks.current[1].tag}
+                Наш сайт
               </div>
-            )}
           </div>
         </div>
       </div>

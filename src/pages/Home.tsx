@@ -1,4 +1,5 @@
 import logo from "../assets/images/firmLogo.svg";
+import logoText from "../assets/images/icons/logoText.svg"
 import girl1 from "../assets/images/Понёвный_женский_комплекс_XIX_в_2ВЕР.png";
 import girl2 from "../assets/images/Сарафанный_женский_комплекс_ XIX_в_2В_РЕД_Problembo.png";
 import boy1 from "../assets/images/image (46) 1.png";
@@ -12,7 +13,11 @@ export default function Home() {
       onClick={() => navigate("/select")}
       className="w-full h-full fixed top-0 bg-linear-to-b from-light-blue to-blue-accent justify-center pt-[164px]"
     >
-      <img src={logo} alt="logo" className="mx-auto h-[600px]" />
+      <div className="mx-auto flex justify-center items-center gap-[44.73px] w-[1285px] h-[600px]">      
+        <img src={logo} alt="logo" className="mx-auto h-[600px]" />
+        <img src={logoText} alt="Курганский областной художественный музей им Г.А. Травникова" className="w-[735.54px] h-[405.6px]"/>
+      </div>
+
       <div className="mt-[128px] text-white text-[240px] tracking-[-9.6px] leading-[100%] uppercase text-center font-bold font-osnova-pro">
         Примерь народный Костюм
       </div>

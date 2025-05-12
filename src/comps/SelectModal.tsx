@@ -25,25 +25,27 @@ export default function SelectModal({
   const [selected, setSelected] = useState(init);
   const [currPage, setPage] = useState(0);
   const maxPages = data.length / 3;
+  const scrollable = document.getElementById("scrollable");
   return (
-    <div className="w-full bottom-0 pt-[64px] pb-[128px] bg-white fixed gap-[64px] rounded-t-[136px] px-[64px]">
+    <div className={`w-full bottom-0 pt-[64px] pb-[128px] bg-white fixed gap-[64px] rounded-t-[136px] px-[64px] ${texts[2] ? "h-[1375px]" : "h-[1698px]"}`}>
       <div className="text-gray-primary text-[80px] tracking-0 leading-[100%] uppercase text-left font-bold font-osnova-pro">
         {texts[0]}
       </div>
       <div
+        id={"scrollable"}
         className={
-          "w-[2032px] h-[874px] mt-[32px] flex gap-[32px] overflow-hidden"
+          "w-[2032px] h-[874px] mt-[32px] flex gap-[32px] overflow-auto hide-scroll"
         }
       >
         <button
-          onClick={() => setPage((prev) => prev - 1)}
+          onClick={() => {setPage((prev) => prev - 1); scrollable?.scroll(0,0)}}
           disabled={currPage === 0}
           className="absolute mt-[393px] left-[96px] disabled:opacity-[30%] size-[88px] shadow-[0px_8px_12px_0px_#58687C26] rounded-full bg-white flex justify-center items-center z-100"
         >
           <img src={arrRight} alt="prev" className="rotate-180 " />
         </button>
         <button
-          onClick={() => setPage((prev) => prev + 1)}
+          onClick={() => {setPage((prev) => prev + 1); scrollable?.scroll(0,0)}}
           disabled={currPage >= maxPages - 1}
           className="absolute mt-[393px] right-[96px] disabled:opacity-[30%] size-[88px] shadow-[0px_8px_12px_0px_#58687C26] rounded-full bg-white flex justify-center items-center z-100"
         >
@@ -79,18 +81,18 @@ export default function SelectModal({
         ))}
       </div>
       <div hidden={!!texts[2]}>
-        <div className="mt-[64px] font-osnova-pro font-bold text-[56px] leading-[100%] tracking-0 text-gray-primary">
+        <div className="mt-[64px] font-osnova-pro font-bold text-[64px] leading-[100%] tracking-0 text-gray-primary">
           {data[selected].title}
         </div>
         <div className="mt-[32px] font-osnova-pro font-normal text-[40px] leading-[100%] tracking-0 text-gray-secondary">
           {data[selected].description}
         </div>
       </div>
-      <div className="w-full mt-[64px] flex justify-end gap-[64px] items-center h-[146px]">
+      <div className="w-[2032px] fixed bottom-[128px] right-[64px] flex justify-end gap-[64px] items-center h-[146px]">
         <button
           onClick={onBack}
           hidden={!texts[2]}
-          className="w-[378px] h-[146px] border-[4px] border-blue-accent rounded-[72px] mr-[662px] gap-[24px] font-osnova-pro font-bold text-[48px] leading-[100%] tracking-0 flex justify-center items-center text-blue-accent"
+          className="absolute w-[378px] h-[146px] border-[4px] border-blue-accent rounded-[72px] fixed left-[64px] gap-[24px] font-osnova-pro font-bold text-[48px] leading-[100%] tracking-0 flex justify-center items-center text-blue-accent"
         >
           <img src={back} alt="back" className="size-[48px] rotate-180" />
           {texts[2]}
