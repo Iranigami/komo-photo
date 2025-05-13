@@ -3,6 +3,7 @@ import SelectModal from "../comps/SelectModal";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import type { VariantData } from "../Types";
+import Waiting from "../comps/Waiting";
 
 export default function Selecting() {
   const navigate = useNavigate();
@@ -68,6 +69,7 @@ export default function Selecting() {
           }
         />
       )}
+      <Waiting />
     </div>
   );
 }

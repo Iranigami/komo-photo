@@ -120,6 +120,7 @@ h1 {
 }
 
 .hide-scroll {
+  scroll-behavior: auto;
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
@@ -127,4 +128,7 @@ h1 {
 .hide-scroll::-webkit-scrollbar {
   width: 0;
   height: 0;
+}
+.Toastify__toast-container {
+  width: fit-content;
 }

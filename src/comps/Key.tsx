@@ -1,5 +1,8 @@
 import backspace from "../assets/images/icons/backspace-inactive.svg";
 import globe from "../assets/images/icons/globe.svg";
+import shift0 from "../assets/images/icons/Shift0.svg";
+import shift1 from "../assets/images/icons/Shift1.svg";
+import shift2 from "../assets/images/icons/Shift2.svg";
 
 type Props = {
   type: string;
@@ -25,7 +28,11 @@ export default function Key({
       {type === "backspace" && <img src={backspace} alt="backspace" />}
       {type === "lang" && <img src={globe} alt="lang" />}
       {type === "shift" && (
-        <img src={`src/assets/images/icons/Shift${shift}.svg`} alt="shift" />
+        <>
+          <img hidden={shift != 0} src={shift0} alt="shift" />
+          <img hidden={shift != 1} src={shift1} alt="shift" />
+          <img hidden={shift != 2} src={shift2} alt="shift" />
+        </>
       )}
     </button>
   );

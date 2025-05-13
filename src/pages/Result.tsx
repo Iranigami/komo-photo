@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import reload from "../assets/images/icons/reload.svg";
-import logo from "../assets/images/firmLogo.svg"
+import logo from "../assets/images/firmLogo.svg";
 import ErrorModal from "../comps/ErrorModal";
 import SaveModals from "../comps/SaveModals";
 import axios from "axios";
+import Waiting from "../comps/Waiting";
 
 export default function Result() {
   const [isPhotoLoading, setPhotoLoading] = useState(true);
@@ -54,7 +55,17 @@ export default function Result() {
         </div>
       )}
       {isErrorModalOpen && <ErrorModal />}
-      {isSaveModalsOpen && <><img src={logo} alt="logo" className="fixed bottom-[64px] right-[64px] h-[256px]" /><SaveModals /></>}
+      {isSaveModalsOpen && (
+        <>
+          <img
+            src={logo}
+            alt="logo"
+            className="fixed bottom-[64px] right-[64px] h-[256px]"
+          />
+          <SaveModals />
+        </>
+      )}
+      <Waiting />
     </div>
   );
 }

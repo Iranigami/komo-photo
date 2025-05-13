@@ -15,6 +15,7 @@ export default function SaveModals() {
   const apiUrl = import.meta.env.VITE_API_URL;
   const shareLinks = useRef<ShareLink[]>([]);
   const [isEmailCorrect, setEmailCorrect] = useState(false);
+  const [isToastShown, setToastShown] = useState<string>();
   const checkEmail = (email: string) => {
     const re =
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -46,9 +47,17 @@ export default function SaveModals() {
       })
       .then((response) => {
         console.log(response.data);
+        setToastShown("Успешно отправлено");
+        setTimeout(() => {
+          setToastShown(undefined);
+        }, 5000);
       })
       .catch((error) => {
         console.log(error.data);
+        setToastShown("Произошла ошибка. Попробуйте позже");
+        setTimeout(() => {
+          setToastShown(undefined);
+        }, 5000);
       });
   };
   return (
@@ -71,9 +80,9 @@ export default function SaveModals() {
                 className=""
               />
             )}
-              <div className="font-normal tracking-[0.4px] text-[40px] text-gray-primary mt-[20px]">
-                Вконтакте
-              </div>
+            <div className="font-normal tracking-[0.4px] text-[40px] text-gray-primary mt-[20px]">
+              Вконтакте
+            </div>
           </div>
           <div className="size-[461px] bg-blue-bg rounded-[64px] p-[20px] mt-[64px]">
             {!loading && (
@@ -83,9 +92,9 @@ export default function SaveModals() {
                 className=""
               />
             )}
-              <div className="font-normal tracking-[0.4px] text-[40px] text-gray-primary mt-[20px]">
-                Наш сайт
-              </div>
+            <div className="font-normal tracking-[0.4px] text-[40px] text-gray-primary mt-[20px]">
+              Наш сайт
+            </div>
           </div>
         </div>
       </div>
@@ -142,6 +151,11 @@ export default function SaveModals() {
         opened={isKeyboardOpen}
         onClose={() => setKeyboardOpen(false)}
       />
+      <div
+        className={`fixed top-[64px] bg-white left-0 right-0 mx-auto duration-150 ${!isToastShown && "translate-y-[-500px]"} text-[72px] text-gray-primary font-osnova-pro font-bold text-center w-[1500px] p-[32px] bg-white rounded-[40px] shadow-[0px_16px_24px_0px_#2D374426] p-[32px]`}
+      >
+        {isToastShown}
+      </div>
     </div>
   );
 }
