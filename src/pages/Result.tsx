@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import reload from "../assets/images/icons/reload.svg";
+import logo from "../assets/images/firmLogo.svg"
 import ErrorModal from "../comps/ErrorModal";
 import SaveModals from "../comps/SaveModals";
 import axios from "axios";
@@ -53,7 +54,7 @@ export default function Result() {
         </div>
       )}
       {isErrorModalOpen && <ErrorModal />}
-      {isSaveModalsOpen && <SaveModals />}
+      {isSaveModalsOpen && <><img src={logo} alt="logo" className="fixed bottom-[64px] right-[64px] h-[256px]" /><SaveModals /></>}
     </div>
   );
 }
