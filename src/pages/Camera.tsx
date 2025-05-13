@@ -86,12 +86,6 @@ export default function Camera() {
   }, [webcamRef]);
   return (
     <div className="fixed top-0 w-full h-full">
-      <button
-        onClick={() => navigate("/")}
-        className="z-[1000] w-[435px] h-[168px] bg-[#FFFFFF50] rounded-[64px] text-white font-bold text-[48px] top-[64px] fixed left-[64px]"
-      >
-        На главную
-      </button>
       <div className="mt-[128px] text-white text-[240px] tracking-[-9.6px] leading-[100%] uppercase text-center font-bold font-osnova-pro">
         Поместите лицо
         <br />в область
