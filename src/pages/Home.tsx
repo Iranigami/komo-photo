@@ -1,8 +1,8 @@
 import logo from "../assets/images/firmLogo.svg";
 import logoText from "../assets/images/icons/logoText.svg";
-import girl1 from "../assets/images/Понёвный_женский_комплекс_XIX_в_2ВЕР.png";
-import girl2 from "../assets/images/Сарафанный_женский_комплекс_ XIX_в_2В_РЕД_Problembo.png";
-import boy1 from "../assets/images/image (46) 1.png";
+import girl1 from "../assets/images/Понёвный_женский_комплекс_XIX_в_2ВЕР.webp";
+import girl2 from "../assets/images/Сарафанный_женский_комплекс_ XIX_в_2В_РЕД_Problembo.webp";
+import boy1 from "../assets/images/image (46) 1.webp";
 import pick from "../assets/images/icons/pick.png";
 import { useNavigate } from "react-router-dom";
 
