@@ -45,7 +45,7 @@ export default function Waiting() {
       {isUserInactive && (
         <>
                   <div className="w-full h-full fixed bg-[#00000099] top-0 left-0"/>
-        <div className="fixed w-[1347px] h-[910px] top-[1487.5px] left-[407px] rounded-[64px] py-[128px] px-[64px] bg-white shadow-[24px_16px_24px_0px_#2D374426]">
+        <div className="z-1000 fixed w-[1347px] h-[910px] top-[1487.5px] left-[407px] rounded-[64px] py-[128px] px-[64px] bg-white shadow-[24px_16px_24px_0px_#2D374426]">
           <img src={err} alt="error" className="size-[156px] mx-auto" />
           <div className="mt-[64px] text-gray-primary text-[80px] tracking-0 leading-[100%] uppercase text-center font-bold font-osnova-pro mb-[32px]">
             Хотите продолжить?
