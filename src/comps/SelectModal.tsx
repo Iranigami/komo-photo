@@ -75,7 +75,7 @@ export default function SelectModal({
     <div
       className={`w-full bottom-0 pt-[64px] pb-[128px] bg-white fixed gap-[64px] rounded-t-[136px] px-[64px] ${texts[2] ? "h-[1375px]" : "h-[1750px]"}`}
     >
-      <div className="text-gray-primary text-[80px] tracking-0 leading-[100%] uppercase text-left font-bold font-osnova-pro">
+      <div className="text-gray-primary text-[64px] tracking-0 leading-[100%] uppercase text-left font-bold font-osnova-pro">
         {texts[0]}
       </div>
       <div
@@ -137,10 +137,10 @@ export default function SelectModal({
       </div>
       {data[selected] && (
         <div hidden={!!texts[2]}>
-          <div className="mt-[64px] font-osnova-pro font-bold text-[64px] leading-[100%] tracking-0 text-gray-primary">
+          <div className="mt-[64px] font-osnova-pro font-bold text-[56px] leading-[100%] tracking-0 text-gray-primary">
             {data[selected].title}
           </div>
-          <div className="mt-[32px] font-osnova-pro font-normal text-[40px] leading-[100%] tracking-0 text-gray-secondary">
+          <div className="mt-[40px] font-osnova-pro font-normal text-[40px] leading-[100%] tracking-0 text-gray-secondary">
             {data[selected].description}
           </div>
         </div>
