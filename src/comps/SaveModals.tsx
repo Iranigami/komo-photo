@@ -42,7 +42,7 @@ export default function SaveModals() {
       imageResults: photoId,
     };
     axios
-      .post(`${apiUrl}/api/image_results`, data, {
+      .post(`${apiUrl}/api/image_results/mail`, data, {
         headers: { "Content-Type": "application/json" },
       })
       .then((response) => {
