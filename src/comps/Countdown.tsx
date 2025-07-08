@@ -9,7 +9,7 @@ export default function Countdown({ frames }: Props) {
     result.push(start--);
   }
   return (
-    <div className="countdown-container size-[408px] bottom-0 mt-[1945px] mx-auto flex justify-center">
+    <div className="fixed bottom-[-1400px] countdown-container size-[408px] mt-[1945px] mx-auto flex justify-center">
       {result!.map((frame: number) => (
         <div
           style={{

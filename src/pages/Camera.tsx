@@ -1,6 +1,4 @@
 import Webcam from "react-webcam";
-import frame from "../assets/images/frame.svg";
-import sparkles from "../assets/images/sparkles.gif";
 import time from "../assets/images/icons/timer.svg";
 import React, { useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -8,6 +6,7 @@ import axios from "axios";
 import LoadingModal from "../comps/LoadingModal";
 import Countdown from "../comps/Countdown";
 import Waiting from "../comps/Waiting";
+import arrIcon from "../assets/images/icons/next copy.svg"
 
 export default function Camera() {
   const [isCountdownShown, setCountdownShown] = useState(false);
@@ -86,16 +85,9 @@ export default function Camera() {
   }, [webcamRef]);
   return (
     <div className="fixed top-0 w-full h-full">
-      <div className="mt-[128px] text-white text-[240px] tracking-[-9.6px] leading-[100%] uppercase text-center font-bold font-osnova-pro">
-        Поместите лицо
-        <br />в область
+      <div className="mt-[248px] text-white text-[240px] tracking-[-9.6px] leading-[100%] uppercase text-center font-bold font-osnova-pro">
+        Смотрите<br/>в камеру
       </div>
-      <img src={frame} alt="here" className="mt-[197px] mx-auto z-100" />
-      <img
-        src={sparkles}
-        alt="img"
-        className="absolute left-0 right-0 mx-auto mt-[-1200px] z-100"
-      />
       <Webcam
         onUserMediaError={() => setErrorStated(true)}
         screenshotFormat="image/jpeg"
@@ -105,6 +97,9 @@ export default function Camera() {
         height={2160}
         className="top-[600px] rotate-270 z-[-1] absolute scale-[230%]"
       />
+      <button         hidden={isSnapButtonDisabled} onClick={() => navigate(-1)} className="fixed bottom-[400px] left-[64px] size-[200px] bg-blue-accent rounded-full flex justify-center items-center">
+          <img src={arrIcon} alt="" className="size-[72px] rotate-180" />
+        </button>
       <div
         hidden={isSnapButtonDisabled}
         className="w-full h-[360px] rounded-t-[136px] bg-white bottom-0 fixed px-[64px] flex justify-between items-center"
