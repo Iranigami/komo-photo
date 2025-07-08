@@ -12,7 +12,8 @@ export default function SaveModals() {
   const inputField = document.getElementById("email")!;
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(true);
-  const apiUrl = import.meta.env.VITE_API_URL;
+    //@ts-ignore
+  const apiUrl = window.__API_CONFIG__.apiUrl;
   const shareLinks = useRef<ShareLink[]>([]);
   const [isEmailCorrect, setEmailCorrect] = useState(false);
   const [isToastShown, setToastShown] = useState<string>();

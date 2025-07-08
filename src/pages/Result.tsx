@@ -10,7 +10,8 @@ import Waiting from "../comps/Waiting";
 export default function Result() {
   const [isPhotoLoading, setPhotoLoading] = useState(true);
   const [isErrorModalOpen, setErrorModalOpen] = useState(false);
-  const apiUrl = import.meta.env.VITE_API_URL;
+    //@ts-ignore
+  const apiUrl = window.__API_CONFIG__.apiUrl;
   const [isSaveModalsOpen, setSaveModalsOpen] = useState(false);
   const navigate = useNavigate();
   const [bg, setBg] = useState("");

@@ -24,7 +24,8 @@ export default function SelectModal({
 }: Props) {
   const lastObserver = useRef<IntersectionObserver | null>(null);
   const firstObserver = useRef<IntersectionObserver | null>(null);
-  const apiUrl = import.meta.env.VITE_API_URL;
+    //@ts-ignore
+  const apiUrl = window.__API_CONFIG__.apiUrl;
   const navigate = useNavigate();
   const [selected, setSelected] = useState(init);
   const [isLastButtonEnabled, setLastButtonEnabled] = useState(true);

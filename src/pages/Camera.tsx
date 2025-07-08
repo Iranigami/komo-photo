@@ -16,7 +16,8 @@ export default function Camera() {
   const [isErrorStated, setErrorStated] = useState(false);
   const [timerAppearance, setTimerAppearance] = useState(0);
   const timer = useRef(3000);
-  const apiUrl = import.meta.env.VITE_API_URL;
+    //@ts-ignore
+  const apiUrl = window.__API_CONFIG__.apiUrl;
   const webcamRef = React.useRef<Webcam>(null);
   const [isLoading, setLoading] = useState(false);
   const makePhoto = () => {

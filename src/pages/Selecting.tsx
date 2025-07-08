@@ -8,7 +8,8 @@ import loadIcon from "../assets/images/icons/loading.svg";
 
 export default function Selecting() {
   const navigate = useNavigate();
-  const apiUrl = import.meta.env.VITE_API_URL;
+    //@ts-ignore
+  const apiUrl = window.__API_CONFIG__.apiUrl;
   const [characterList, setCharacterList] = useState<VariantData[]>([]);
   const [backgroundList, setBackgroundList] = useState<VariantData[]>([]);
   const [loading, setLoading] = useState(true);
